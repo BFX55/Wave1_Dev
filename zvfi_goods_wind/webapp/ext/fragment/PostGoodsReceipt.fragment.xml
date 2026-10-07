@@ -1,0 +1,98 @@
+<!--
+
+    Copyright (C) 2009-2023 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition id="RenewContractFragment" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:table="sap.ui.table"  xmlns:smartForm="sap.ui.comp.smartform"
+	xmlns:smartField="sap.ui.comp.smartfield" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" >
+	<Dialog id="RenewContractDialog" contentWidth="70%" title="{@i18n>PostGr}" beforeOpen="onBeforeOpenF" >
+		<content>
+			<VBox id="RenewContractDialogVBox" class="DialogContentVBox">
+				<smartForm:SmartForm id="RenewContractDialogSmartForm">
+					<smartForm:Group id="RenewContractDialogGroup">
+						<smartForm:GroupElement id="PurchaseContractGroupElement" label = "{@i18n>Plant}">
+ 						
+                            <Text id="PurchaseContractSmartField" 
+							text="{postGrModel>/PlantName}" tooltip="{postGrModel>/Plant}"></Text>
+						
+ 						</smartForm:GroupElement>
+
+ 						<smartForm:GroupElement  id="ValidityEndDateGroupElement" label = "{@i18n>ValidityEndDate}">
+ 							<DatePicker  dateValue="{parts:[{path:'postGrModel>/PostingDate'} ]}"
+							change="onValidityEndDateChanged"
+                             displayFormat="yyyy-MM-dd"
+							id="idValidityEndDate" tooltip="{i18n>Calendar}" width="20%"/>
+ 						</smartForm:GroupElement>
+ 					
+ 						<smartForm:GroupElement id="TargetValueGroupElement" label = "{@i18n>DelivNote}">
+ 							<Input change="onTargetAmtChange"  width="14rem" id="idTargetAmount" maxLength="12" textAlign="Right"
+							type="Text" value="{postGrModel>/DelivNote}"/>
+ 						</smartForm:GroupElement>
+					</smartForm:Group>
+ 				</smartForm:SmartForm>
+ 				<Table updateFinished = "onTableUpdateFinished" id ="idMaterialQuantityTable" items="{postGrModel>/to_MaterialDocumentItem}">
+ 					<headerToolbar>
+						<Toolbar id="ItemsToolbar">
+							<Title id="ItemsTitle" text="{@i18n>Items}"/>
+							<ToolbarSpacer id="ToolSpace"/>
+							<Button id="RecQuantity" press="onPressRec" icon="sap-icon://activate" text="{@i18n>Receive}"></Button>
+						</Toolbar>
+					</headerToolbar>
+ 					<columns>
+						<Column id="MaterialDescriptionColumn">
+							<Text id="MaterialDescriptionText" text="{@i18n>MaterialDescription}"/>
+						</Column>
+						<Column id="VendorMaterialColumn">
+							<Text id="VendorMaterialText" text="{@i18n>VendorMaterial}"/>
+						</Column>
+						<Column id="ConditionColumn">
+							<Text id="ConditionText" text="{@i18n>Condition}"/>
+						</Column>
+						<Column id="RequiredQuantityColumn" hAlign="Left" >
+							<Text id="RequiredQuantityText" text="{@i18n>RequiredQuantity}"/>
+						</Column>
+						<Column id="TotalReceivedColumn" hAlign="Left" >
+							<Text id="TotalReceivedText" text="{@i18n>TotalReceived}"/>
+						</Column>
+						<Column id="ToBeReceivedColumn" hAlign="Left" >
+							<Text id="ToBeReceivedText" text="{@i18n>ToBeReceived}"/>
+						</Column>
+						<Column id="TargetQuantityId" hAlign="Right" >
+							<Text id="TargetQuantityText" text="{@i18n>TargetQuantity}"/>
+						</Column>
+						<Column id="BaseUnitId" hAlign="Right" >
+							<Text id="BaseUnitText" text="{@i18n>BaseUnit}"/>
+						</Column>
+						<Column id="SerialNumberId" hAlign="Right" >
+							<Text id="SerialNumberText" text="{@i18n>SerialNumber}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem id="MaterialColumnListItem" >
+							<cells> 
+								<Text id="MaterialNameT" text="{postGrModel>MaterialName}" tooltip="{postGrModel>Material}" ></Text>
+								<Text id="SupMaterialT" text="{postGrModel>SupplierMaterialNumber}"></Text>
+								<Text id="ConditionT" text="{postGrModel>ValuationType}"></Text>
+								<Text id="RequiredQuantityT" text="{postGrModel>RequiredQuantity}" textAlign="Right"  ></Text>
+								<Text id="TotalReceivedT" text="{postGrModel>TotalReceived}"  textAlign="Right" ></Text>
+								<Text id="ToBeReceivedT" text="{postGrModel>ToBeReceived}" textAlign="Right" ></Text>
+								<Input id="TargetQuantityInput" change="onTargetQtyChange" description="{BaseUnit}" textAlign="Right" type="Number"
+										value="{postGrModel>Received}">
+								</Input>
+								<Text id="BaseUnitT" text="{postGrModel>BaseUnit}" textAlign="Right" ></Text>
+								
+							<Button id="AddSerial" press="onPickSernr" icon="sap-icon://bar-code"  type ="{postGrModel>Serialized}" visible = "{postGrModel>SernrV}" enabled ="true" ></Button>
+							</cells>
+						</ColumnListItem>
+					</items>
+ 				</Table>
+			</VBox>
+		</content>
+		<beginButton>
+			<Button id="RenewButton" type="Emphasized" press="onPressPost" text="{@i18n>Save}"/>
+		</beginButton>
+		<endButton>
+			<Button id="CancelButton" press="onPostCancel" text="{@i18n>Cancel}"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

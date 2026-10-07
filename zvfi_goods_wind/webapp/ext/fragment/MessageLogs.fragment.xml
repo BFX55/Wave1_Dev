@@ -1,0 +1,18 @@
+<core:FragmentDefinition id="MessagesFragment" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="messageDialog" title="Messages" class="sapUiContentPadding" draggable="true" resizable="true">
+        <List id="messageList" items="{messageModel>/messages}">
+            <items>
+                <StandardListItem  id="MessageslistItems"
+                  title="{messageModel>text}" 
+                icon="{= ${messageModel>type} === 'Error' ? 'sap-icon://error' : 
+                       ${messageModel>type} === 'Warning' ? 'sap-icon://alert' : 
+                       'sap-icon://message-success'}"
+                       infoState="{messageModel>type}"
+                    type="Inactive"/>
+            </items>
+        </List>
+        <beginButton>
+            <Button id="MessagesCloseB" text="Close" press=".onCloseMessageDialog" />
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

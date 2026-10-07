@@ -1,0 +1,131 @@
+<!--
+
+    Copyright (C) 2009-2023 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+    id="SerialNumbersFragment"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+>
+    <Dialog
+        id="SerialNumbersDiaglog"
+        contentWidth="50%"
+        title="{@i18n>Sernrs}"
+        beforeOpen="onBeforeOpenF"
+    >
+        <content>
+            <VBox
+                id="SerialNumbersDialogVBox"
+                class="DialogContentVBox"
+            >
+                <Table
+                    updateFinished="onTableUpdateFinished"
+                    id="idSerialNumberTable"
+                    items="{SerialModel>/toSerials}"
+                >
+                    <headerToolbar>
+                        <Toolbar id="SerialsToolbar">
+                            <Text
+                                text="{parts: [{path: 'SerialModel>/PurchaseOrder'}, {path: 'SerialModel>/PurchaseOrderItem'}], 
+                                       formatter: '.formatSernrKeys'}"
+                                id="SernrKeys"
+                            />
+                            <Text
+                                text="{parts: [{path: 'SerialModel>/Material'}, {path: 'SerialModel>/MaterialName'}], 
+                                       formatter: '.formatSernrKeys'}"
+                                id="MatnrKeys"
+                            />
+                            <Input
+                                id="SerialManualInput"
+                                textAlign="Right"
+                                type="Text"
+                                maxLength='18'
+                                submit="onPressManSerialAdd"
+                            />
+                            <Button
+                                id="ManSerialAdd"
+                                icon="sap-icon://add-product"
+                                type="Success"
+                                press="onPressManSerialAdd"
+                            />
+                        </Toolbar>
+                    </headerToolbar>
+
+                    <columns>
+                        <Column
+                            id="SelectColumn"
+                            width="3rem"
+                        >
+                            <Text
+                                text=""
+                                id="EmptySelF"
+                            />
+                            <!-- Empty header or you can put "Select" -->
+                        </Column>
+
+                        <Column id="SerialNumberColumn">
+                            <Text
+                                id="SerialNumberVText"
+                                text="{@i18n>SerialNumber}"
+                            />
+                        </Column>
+                        <Column
+                            id="DeleteColumn"
+                            width="3rem"
+                        >
+                            <Text
+                                text=""
+                                id="EmptyDelF"
+                            />
+                            <!-- Empty header or you can put "Select" -->
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="SerialNumberListItem">
+                            <cells>
+                                <CheckBox
+                                    id="SelectCheckbox"
+                                    selected="{SerialModel>Selected}"
+                                    select="onSelectCheckbox"
+                                />
+                                <Text
+                                    id="SerialNumberT"
+                                    text="{SerialModel>SerialNumber}"
+                                    tooltip="{SerialModel>SerialNumber}"
+                                />
+                                <Button
+                                    id="DeleteSerialBtn"
+                                    icon="sap-icon://delete"
+                                    type="Transparent"
+                                    press="onDeleteSerial"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                id="PickButton"
+                type="Emphasized"
+                press="onPickSerials"
+                text="{@i18n>Pick}"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                id="EndButton"
+                type="Emphasized"
+                press="onPickCancel"
+                text="{@i18n>Cancel}"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

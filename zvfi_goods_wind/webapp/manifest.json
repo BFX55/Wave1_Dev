@@ -1,0 +1,221 @@
+{
+  "_version": "1.60.0",
+  "sap.app": {
+    "id": "zvfigoodswind",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:alp",
+      "version": "1.17.1",
+      "toolsId": "2c2d6784-0fa0-485f-a962-6d0ec5f83fb1"
+    },
+    "dataSources": {
+      "ZVFI_SB_E_LO_W_PURORDITM_VAN": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZVFI_SB_E_LO_W_PURORDITM_VAN',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/ZVFI_SB_E_LO_W_PURORDITM_VAN.xml"
+        }
+      },
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZVFI_SB_E_LO_W_PURORDITM/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZVFI_SB_E_LO_W_PURORDITM_VAN",
+            "annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "Sernr": {
+        "uri": "/sap/opu/odata/sap/ZVFI_SB_E_LO_W_OUTB_SERNR/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZVFI_SB_E_LO_W_OUTB_SERNR",
+            "annotation"
+          ],
+          "odataVersion": "2.0"
+        }
+      },
+      "GoodsIssue": {
+        "uri": "/sap/opu/odata4/sap/zvfi_sb_e_lo_w_goodsissue/srvd/sap/zvfi_sd_e_lo_w_goodsissue/0001/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "ZVFI_E_LO_W_GOODS_RECEIPT-manage": {
+          "semanticObject": "ZVFI_E_LO_W_GOODS_RECEIPT",
+          "action": "manage",
+          "title": "{{ZVFI_E_LO_W_GOODS_RECEIPT-manage.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "subTitle": "{{ZVFI_E_LO_W_GOODS_RECEIPT-manage.flpSubtitle}}"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {},
+        "sap.f": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.suite.ui.generic.template": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.viewExtensions": {
+          "sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage": {}
+        },
+        "sap.ui.controllerExtensions": {
+          "sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage": {
+            "controllerName": "zvfigoodswind.ext.controller.AnalyticalListPageExt",
+            "sap.ui.generic.app": {
+              "ZVFI_CV_E_LO_W_PURORDITM": {
+                "EntitySet": "ZVFI_CV_E_LO_W_PURORDITM",
+                "Actions": {
+                  "RenewContract": {
+                    "id": "postgr",
+                    "text": "Post Goods Receipt",
+                    "press": "onPostGr",
+                    "requiresSelection": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "zvfigoodswind.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": false,
+          "metadataUrlParams": {
+            "sap-value-list": "none"
+          }
+        }
+      },
+      "Sernr": {
+        "dataSource": "Sernr",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": false,
+          "metadataUrlParams": {
+            "sap-value-list": "none"
+          }
+        }
+      },
+      "GoodsIssue": {
+        "dataSource": "GoodsIssue",
+        "preload": true
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [],
+      "targets": {}
+    }
+  },
+  "sap.ui.generic.app": {
+    "_version": "1.3.0",
+    "settings": {
+      "forceGlobalRefresh": false,
+      "objectPageHeaderType": "Dynamic",
+      "considerAnalyticalParameters": true,
+      "showDraftToggle": false
+    },
+    "pages": {
+      "AnalyticalListPage|ZVFI_CV_E_LO_W_PURORDITM": {
+        "entitySet": "ZVFI_CV_E_LO_W_PURORDITM",
+        "component": {
+          "name": "sap.suite.ui.generic.template.AnalyticalListPage",
+          "list": true,
+          "settings": {
+            "condensedTableLayout": true,
+            "showGoButtonOnFilterBar": true,
+            "autoHide": true,
+            "smartVariantManagement": true,
+            "defaultFilterMode": "compact",
+            "tableSettings": {
+              "multiSelect": true,
+              "type": "AnalyticalTable"
+            },
+            "keyPerformanceIndicators": {}
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "analytical"
+  }
+}
